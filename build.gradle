@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.tinkerpop.blueprints:blueprints-core:2.6.0'
+    compile 'org.yaml:snakeyaml:1.14'
+    
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.0-rc-1'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'junit:junit:4.12'
+}

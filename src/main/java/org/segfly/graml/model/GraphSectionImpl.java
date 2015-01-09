@@ -1,9 +1,9 @@
 package org.segfly.graml.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.map.LRUMap;
 import org.segfly.graml.GramlException;
 
 import com.tinkerpop.blueprints.Graph;
@@ -17,7 +17,7 @@ public class GraphSectionImpl implements GraphSection {
 
     private ClassmapSection                  classmap;
     private Map<String, Map<String, Object>> section;
-    private HashMap<String, Vertex>          vertexCache;
+    private LRUMap                           vertexCache;
 
     // TODO figure out why Map<String, ?> results in internal groovy compiler error
     public GraphSectionImpl(final Map<String, Map<String, Object>> section, final ClassmapSection classmap)
@@ -28,7 +28,7 @@ public class GraphSectionImpl implements GraphSection {
 
         this.classmap = classmap;
         this.section = section;
-        vertexCache = new HashMap<String, Vertex>();
+        vertexCache = new LRUMap();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class GraphSectionImpl implements GraphSection {
 
     private Vertex findOrCreateVertex(final Graph g, final String vertexName) {
         String resolvedVertexName = classmap.resolveVertex(vertexName);
-        Vertex vertex = vertexCache.get(resolvedVertexName);
+        Vertex vertex = (Vertex) vertexCache.get(resolvedVertexName);
         if (vertex == null) {
             vertex = g.getVertex(resolvedVertexName);
             if (vertex == null) {

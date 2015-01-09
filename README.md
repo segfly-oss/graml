@@ -59,10 +59,9 @@ YAML's inline lists (via [ ] ) and associative-lists (via { } ) allow simple one
 graml: {version: 1.0}
 
 graph:
-  apples: {growOn: tree}
-  trees: {require: water, exhale: O2}
-  water: {hasForm: [rain, snow, sleet, hail]}
-  water: {is: wet}    
+  apple: {growsOn: tree}
+  tree: {dependsOn: water, exhale: O2}
+  water: {precipitatesAs: [rain, snow, sleet, hail]}
 ```
 
 ## Graml Basics
@@ -126,7 +125,6 @@ graph:
   apple: {growsOn: tree}
   tree: {dependsOn: water, exhale: O2}
   water: {precipitatesAs: [rain, snow, sleet, hail]}
-  water: {is: wet}
 ```
 
 ### Entity Properties
@@ -148,7 +146,8 @@ edges:
 Graml currently has the following limitations:
 
 #### 1. Vertices must be unique
-Graml does not support multiple vertices with the same name.
+Graml does not support multiple vertices with the same name in accordance with the Yaml specifcation.
+(sections 3.1.1 and 3.2.1)
 
 ```yaml
 graph:
@@ -156,7 +155,8 @@ graph:
   apple: {influencedBy: gravity}
 ```
 
-The above will result in a single apple vertex with two edges, one connected to "tree" and another connected to "gravity".
+The above will result in an apple vertex with one edge "gravity".
+Future versions of Graml will likely detect this and throw an exception.
 
 If multiple instances of an apple are desired, they should be created with specific names:
 

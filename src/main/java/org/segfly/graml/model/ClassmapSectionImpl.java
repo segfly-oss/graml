@@ -17,13 +17,11 @@ public class ClassmapSectionImpl implements ClassmapSection {
 
     // TODO figure out why Map<String, ?> results in internal groovy compiler error
     public ClassmapSectionImpl(final Map<String, Object> section) throws GramlException {
-        if (section == null) {
-            throw new GramlException("Missing required classmap section.");
-        }
-
-        // Pivot the map
+        // Pivot the map if section is present
         classmap = new HashMap<String, String>();
-        section.forEach((k, v) -> pivot(classmap, k, v));
+        if (section != null) {
+            section.forEach((k, v) -> pivot(classmap, k, v));
+        }
     }
 
     /**
@@ -48,12 +46,22 @@ public class ClassmapSectionImpl implements ClassmapSection {
 
     @Override
     public String resolveEdge(final String edgeName) {
-        return format("%s:%s", classmap.get(edgeName), edgeName);
+        String className = classmap.get(edgeName);
+        if (className != null) {
+            return format("%s:%s", classmap.get(edgeName), edgeName);
+        } else {
+            return edgeName;
+        }
     }
 
     @Override
     public String resolveVertex(final String vertexName) {
-        return format("%s:%s", classmap.get(vertexName), vertexName);
+        String className = classmap.get(vertexName);
+        if (className != null) {
+            return format("%s:%s", classmap.get(vertexName), vertexName);
+        } else {
+            return vertexName;
+        }
     }
 
     @Override

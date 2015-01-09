@@ -1,7 +1,5 @@
 package org.segfly.graml.model
 
-import org.segfly.graml.GramlException
-
 import spock.lang.*
 
 class ClassmapSectionImplSpec extends Specification {
@@ -53,11 +51,18 @@ class ClassmapSectionImplSpec extends Specification {
         classname == 'c1'
     }
 
-    def missingClassmapSectionThrowsException() {
+    def missingClassmapSectionIsAllowed() {
+        setup:
+        def map = new ClassmapSectionImpl(null)
+
         when:
-        new ClassmapSectionImpl(null)
+        def classname = map['v0']
+        def resolvedVertex = map.resolveVertex('v0')
+        def resolvedEdge = map.resolveEdge('e0')
 
         then:
-        thrown(GramlException)
+        classname == null
+        resolvedVertex == 'v0'
+        resolvedEdge == 'e0'
     }
 }

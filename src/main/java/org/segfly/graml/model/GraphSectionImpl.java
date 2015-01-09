@@ -1,5 +1,6 @@
 package org.segfly.graml.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,9 @@ import com.tinkerpop.blueprints.Vertex;
  */
 public class GraphSectionImpl implements GraphSection {
 
-    private ClassmapSection             classmap;
+    private ClassmapSection                  classmap;
     private Map<String, Map<String, Object>> section;
+    private HashMap<String, Vertex>          vertexCache;
 
     // TODO figure out why Map<String, ?> results in internal groovy compiler error
     public GraphSectionImpl(final Map<String, Map<String, Object>> section, final ClassmapSection classmap)
@@ -26,6 +28,7 @@ public class GraphSectionImpl implements GraphSection {
 
         this.classmap = classmap;
         this.section = section;
+        vertexCache = new HashMap<String, Vertex>();
     }
 
     @Override
@@ -50,7 +53,16 @@ public class GraphSectionImpl implements GraphSection {
     }
 
     private Vertex findOrCreateVertex(final Graph g, final String vertexName) {
-        Vertex vertex = g.addVertex(classmap.resolveVertex(vertexName));
+        String resolvedVertexName = classmap.resolveVertex(vertexName);
+        Vertex vertex = vertexCache.get(resolvedVertexName);
+        if (vertex == null) {
+            vertex = g.getVertex(resolvedVertexName);
+            if (vertex == null) {
+                vertex = g.addVertex(resolvedVertexName);
+            }
+        }
+
+        vertexCache.put(resolvedVertexName, vertex);
         return vertex;
     }
 

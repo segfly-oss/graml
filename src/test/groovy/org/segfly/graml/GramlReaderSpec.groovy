@@ -34,5 +34,6 @@ class GramlReaderSpec extends Specification {
               structure: [road]
             graph:
               car: {driveOn: road}
+              truck: {driveOn: [road, dirt]}
     """
 }

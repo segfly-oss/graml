@@ -18,7 +18,8 @@ class GramlReaderSpec extends Specification {
         then:
         graphson.contains("""{"_id":"machine:car","_type":"vertex"}""")
         graphson.contains("""{"_id":"structure:road","_type":"vertex"}""")
-        graphson.contains("""{"_id":"0","_type":"edge","_outV":"machine:car","_inV":"structure:road","_label":"driveOn"}""")
+        graphson.contains("""{"_id":"V:dirt","_type":"vertex"}""")
+        graphson.contains("""{"_id":"0","_type":"edge","_outV":"machine:car","_inV":"structure:road","_label":"E:driveOn"}""")
     }
 
     private def loadGramlGraph(g, graml, yaml) {
@@ -30,6 +31,9 @@ class GramlReaderSpec extends Specification {
 
     def basicYaml = """
             classmap:
+              defaults:
+                 vertex: V
+                 edge: E
               machine: [car]
               structure: [road]
             graph:

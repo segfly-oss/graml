@@ -1,5 +1,7 @@
 package org.segfly.graml.model
 
+import org.segfly.graml.GramlException
+
 import spock.lang.*
 
 class ClassmapSectionImplSpec extends Specification {
@@ -64,5 +66,44 @@ class ClassmapSectionImplSpec extends Specification {
         classname == null
         resolvedVertex == 'v0'
         resolvedEdge == 'e0'
+    }
+
+    def defaultVertexClass() {
+        setup:
+        def section = [defaults: [vertex: 'V', edge: 'E'], foo: 'v1']
+        def map = new ClassmapSectionImpl(section)
+
+        expect:
+        map.resolveVertex(entity) == fqn
+
+        where:
+        entity || fqn
+        'v0'   || 'V:v0'
+        'v1'   || 'foo:v1'
+    }
+
+    def defaultEdgeClass() {
+        setup:
+        def section = [defaults: [vertex: 'V', edge: 'E'], foo: 'e1']
+        def map = new ClassmapSectionImpl(section)
+
+        expect:
+        map.resolveEdge(entity) == fqn
+
+        where:
+        entity || fqn
+        'e0'   || 'E:e0'
+        'e1'   || 'foo:e1'
+    }
+
+    def rogueObject() {
+        setup:
+        def section = [myclass: ['v1', 'v2'], 'rogue': [foo: 'bar']]
+
+        when:
+        def map = new ClassmapSectionImpl(section)
+
+        then:
+        thrown(GramlException)
     }
 }

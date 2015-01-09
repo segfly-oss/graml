@@ -6,7 +6,10 @@ package org.segfly.graml.model;
  */
 public interface ClassmapSection {
 
-    public static String CLASSMAP_SECTION = "classmap";
+    public static String CLASSMAP_SECTION            = "classmap";
+    public static String CLASSMAP_DEFAULT_SUBSECTION = "defaults";
+    public static String CLASSMAP_DEFAULT_VERTEX     = "vertex";
+    public static String CLASSMAP_DEFAULT_EDGE       = "edge";
 
     String resolveVertex(String vertexName);
 

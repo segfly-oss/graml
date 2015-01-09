@@ -14,13 +14,18 @@ import static java.lang.String.format;
  */
 public class ClassmapSectionImpl implements ClassmapSection {
     private Map<String, String> classmap;
+    private String              defaultVertexClass;
+    private String              defaultEdgeClass;
 
     // TODO figure out why Map<String, ?> results in internal groovy compiler error
     public ClassmapSectionImpl(final Map<String, Object> section) throws GramlException {
-        // Pivot the map if section is present
         classmap = new HashMap<String, String>();
+
+        // Pivot the map entries if the classmap section is present
         if (section != null) {
-            section.forEach((k, v) -> pivot(classmap, k, v));
+            for (String key : section.keySet()) {
+                pivot(classmap, key, section.get(key));
+            }
         }
     }
 
@@ -34,21 +39,36 @@ public class ClassmapSectionImpl implements ClassmapSection {
      *            the incoming key
      * @param value
      *            a {@link List} of strings or an individual string
+     * @throws GramlException
      */
     @SuppressWarnings("unchecked")
-    private void pivot(final Map<String, String> target, final String key, final Object value) {
-        if (value instanceof List) {
-            ((List<String>) value).forEach((it) -> target.put(it, key));
-        } else {
-            target.put((String) value, key);
+    private void pivot(final Map<String, String> target, final String key, final Object value) throws GramlException {
+        // Capture the defaults subsection
+        if (CLASSMAP_DEFAULT_SUBSECTION.equals(key)) {
+            Map<String, String> defaults = (Map<String, String>) value;
+            defaultVertexClass = defaults.get(CLASSMAP_DEFAULT_VERTEX);
+            defaultEdgeClass = defaults.get(CLASSMAP_DEFAULT_EDGE);
+            return;
+        }
+
+        try {
+            // For every value in the list create a key and map to the classname
+            if (value instanceof List) {
+                ((List<String>) value).forEach((it) -> target.put(it, key));
+            } else {
+                target.put((String) value, key);
+            }
+        } catch (ClassCastException e) {
+            throw new GramlException("Invalid graml structure.", e);
         }
     }
 
     @Override
     public String resolveEdge(final String edgeName) {
-        String className = classmap.get(edgeName);
+        // If there was no classname and no default, just return the name as-is
+        String className = classmap.getOrDefault(edgeName, defaultEdgeClass);
         if (className != null) {
-            return format("%s:%s", classmap.get(edgeName), edgeName);
+            return format("%s:%s", className, edgeName);
         } else {
             return edgeName;
         }
@@ -56,9 +76,10 @@ public class ClassmapSectionImpl implements ClassmapSection {
 
     @Override
     public String resolveVertex(final String vertexName) {
-        String className = classmap.get(vertexName);
+        // If there was no classname and no default, just return the name as-is
+        String className = classmap.getOrDefault(vertexName, defaultVertexClass);
         if (className != null) {
-            return format("%s:%s", classmap.get(vertexName), vertexName);
+            return format("%s:%s", className, vertexName);
         } else {
             return vertexName;
         }

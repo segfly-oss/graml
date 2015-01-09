@@ -13,9 +13,10 @@ It is designed to represent human-readable graphs more compactly than alternativ
 [MongoDB](https://github.com/mongodb/mongo) and more!
 
 #### Roadmap:
-* Graph serialization to Graml
 * Customizable section names
+* Graph serialization to Graml
 * DB class creation
+* Stream processing
 
 ## Usage
 To enable Graml in your project, simply declare the dependency:
@@ -186,6 +187,14 @@ Carrying forward with the myApple/yourApple example,
 the above edge property would have been applied to the "grownIn" edge for both apples.
 
 This may be addressed in the future with edge IDs.
+
+#### 3. Huge Graphs
+
+Graml's design prioritizes ease-of-use over speed and scale.
+If you have huge graphs, Graml may not be for you.
+At least not yet.
+A future version may incorporate some degree of stream-processing to better handle huge graphs.
+The current implementation expects to process the entire graml file at once which places memory limits on the size of graph. 
 
 ## Getting Involved
 

@@ -3,7 +3,6 @@ package org.segfly.graml.model.impl
 import org.segfly.graml.model.ClassmapSection
 import org.segfly.graml.model.EdgesSection
 import org.segfly.graml.model.VerticesSection
-import org.segfly.graml.model.impl.GraphSectionImpl
 
 import spock.lang.*
 
@@ -15,6 +14,16 @@ class GraphSectionOrientDBITest extends Specification {
 
     VerticesSection stubVerticesProps = Stub()
     EdgesSection stubEdgesProps = Stub()
+
+    def setup() {
+        // Create a unique in-memory database to avoid collisions with parallel test runs
+        def dbId = new Random().nextInt(Integer.MAX_VALUE)
+        g = new OrientGraphNoTx("memory:${dbId}")
+    }
+
+    def cleanup() {
+        g.drop()
+    }
 
     def orientDbClasses() {
         given:

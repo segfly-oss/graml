@@ -15,7 +15,14 @@ class GramlReaderOrientDBITest extends Specification {
 
     def setup() {
         yamlProc = new Yaml()
-        g = new OrientGraphNoTx('memory:GramlReaderOrientDBITest')
+
+        // Create a unique in-memory database to avoid collisions with parallel test runs
+        def dbId = new Random().nextInt(Integer.MAX_VALUE)
+        g = new OrientGraphNoTx("memory:${dbId}")
+    }
+
+    def cleanup() {
+        g.drop()
     }
 
     def readFromFile() {

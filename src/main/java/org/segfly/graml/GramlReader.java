@@ -3,9 +3,11 @@ package org.segfly.graml;
 import java.util.Map;
 
 import org.segfly.graml.model.ClassmapSection;
+import org.segfly.graml.model.EdgesSection;
 import org.segfly.graml.model.GramlFactory;
 import org.segfly.graml.model.GramlFactoryImpl;
 import org.segfly.graml.model.GraphSection;
+import org.segfly.graml.model.VerticesSection;
 import org.yaml.snakeyaml.Yaml;
 
 import com.tinkerpop.blueprints.Graph;
@@ -34,11 +36,13 @@ public class GramlReader {
     public void load(final String yaml) throws GramlException {
         // Read the YAML
         @SuppressWarnings("rawtypes")
-        Map rawmap = (Map) ymlProc.load(yaml);
+        Map fullMap = (Map) ymlProc.load(yaml);
 
         // Decompose the sections
-        ClassmapSection classmap = graml.getClassmapSection(rawmap);
-        GraphSection graph = graml.getGraphSection(rawmap, classmap);
+        ClassmapSection classmap = graml.getClassmapSection(fullMap);
+        EdgesSection edgeProps = graml.getEdgesSection(fullMap);
+        VerticesSection vertexProps = graml.getVerticesSection(fullMap);
+        GraphSection graph = graml.getGraphSection(fullMap, classmap, vertexProps, edgeProps);
 
         // Alter the graph target
         graph.inject(target);

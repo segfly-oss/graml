@@ -4,12 +4,17 @@ import org.segfly.graml.GramlException
 
 import spock.lang.*
 
+import com.tinkerpop.blueprints.Edge
+import com.tinkerpop.blueprints.Vertex
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph
 import com.tinkerpop.blueprints.util.io.graphson.GraphSONWriter
 
 class GraphSectionImplSpec extends Specification {
 
     TinkerGraph g = new TinkerGraph()
+
+    VerticesSection stubVerticesProps = Stub()
+    EdgesSection stubEdgesProps = Stub()
 
     ClassmapSection stubClassmap = Stub() {
         resolveEdge(_) >> { "e:${it[0]}" }
@@ -19,7 +24,7 @@ class GraphSectionImplSpec extends Specification {
     def createsGraphTuples() {
         setup:
         def section = [source: [edge: 'target1', edge2: 'target2']]
-        def graphSection = new GraphSectionImpl(section, stubClassmap)
+        def graphSection = new GraphSectionImpl(section, stubClassmap, stubVerticesProps, stubEdgesProps)
 
         when:
         def graphson = injectGraph(graphSection, g)
@@ -35,7 +40,7 @@ class GraphSectionImplSpec extends Specification {
     def createPolytargets() {
         setup:
         def section = [source: [edge: ['target1', 'target2']]]
-        def graphSection = new GraphSectionImpl(section, stubClassmap)
+        def graphSection = new GraphSectionImpl(section, stubClassmap, stubVerticesProps, stubEdgesProps)
 
         when:
         def graphson = injectGraph(graphSection, g)
@@ -51,7 +56,7 @@ class GraphSectionImplSpec extends Specification {
     def alllowDuplicateEdges() {
         setup:
         def section = [source: [edge: ['target1', 'target1']]]
-        def graphSection = new GraphSectionImpl(section, stubClassmap)
+        def graphSection = new GraphSectionImpl(section, stubClassmap, stubVerticesProps, stubEdgesProps)
 
         when:
         def graphson = injectGraph(graphSection, g)
@@ -64,7 +69,7 @@ class GraphSectionImplSpec extends Specification {
     def resolveExistingVerticiesFromCache() {
         setup:
         def section = [source: [edge: 'target1', edge2: 'source2'], source2: [edge: 'target1']]
-        def graphSection = new GraphSectionImpl(section, stubClassmap)
+        def graphSection = new GraphSectionImpl(section, stubClassmap, stubVerticesProps, stubEdgesProps)
 
         when:
         def graphson = injectGraph(graphSection, g)
@@ -82,8 +87,8 @@ class GraphSectionImplSpec extends Specification {
         setup:
         def section1 = [source: [edge: 'target1', edge2: 'source2']]
         def section2 = [source2: [edge: 'target1']]
-        def graphSection1 = new GraphSectionImpl(section1, stubClassmap)
-        def graphSection2 = new GraphSectionImpl(section2, stubClassmap)
+        def graphSection1 = new GraphSectionImpl(section1, stubClassmap, stubVerticesProps, stubEdgesProps)
+        def graphSection2 = new GraphSectionImpl(section2, stubClassmap, stubVerticesProps, stubEdgesProps)
 
         when:
         graphSection1.inject(g)
@@ -98,10 +103,25 @@ class GraphSectionImplSpec extends Specification {
         graphson.contains("""{"_id":"2","_type":"edge","_outV":"v:source2","_inV":"v:target1","_label":"e:edge"}""")
     }
 
+    def propertyModification() {
+        setup:
+        stubVerticesProps.updateVertexProperties(_,_) >> {s, Vertex v -> v.setProperty("vertexProp", "foo")}
+        stubEdgesProps.updateEdgeProperties(_,_) >> {s, Edge e -> e.setProperty("edgeProp", "bar")}
+        def section = [source: [edge: 'target',]]
+        def graphSection = new GraphSectionImpl(section, stubClassmap, stubVerticesProps, stubEdgesProps)
+
+        when:
+        def graphson = injectGraph(graphSection, g)
+
+        then:
+        graphson.contains("""{"vertexProp":"foo","_id":"v:target","_type":"vertex"}""")
+        graphson.contains("""{"vertexProp":"foo","_id":"v:source","_type":"vertex"}""")
+        graphson.contains("""{"edgeProp":"bar","_id":"0","_type":"edge","_outV":"v:source","_inV":"v:target","_label":"e:edge"}""")
+    }
 
     def missingGraphSectionThrowsException() {
         when:
-        new GraphSectionImpl(null, stubClassmap)
+        new GraphSectionImpl(null, stubClassmap, stubVerticesProps, stubEdgesProps)
 
         then:
         thrown(GramlException)

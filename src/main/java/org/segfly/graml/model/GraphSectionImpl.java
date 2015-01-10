@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.collections.map.LRUMap;
 import org.segfly.graml.GramlException;
 
+import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Vertex;
 
@@ -18,15 +19,19 @@ public class GraphSectionImpl implements GraphSection {
     private ClassmapSection                  classmap;
     private Map<String, Map<String, Object>> section;
     private LRUMap                           vertexCache;
+    private VerticesSection                  vertexProps;
+    private EdgesSection                     edgeProps;
 
     // TODO figure out why Map<String, ?> results in internal groovy compiler error
-    public GraphSectionImpl(final Map<String, Map<String, Object>> section, final ClassmapSection classmap)
-            throws GramlException {
+    public GraphSectionImpl(final Map<String, Map<String, Object>> section, final ClassmapSection classmap,
+            final VerticesSection vertexProps, final EdgesSection edgeProps) throws GramlException {
         if (section == null) {
             throw new GramlException("Missing required graph section.");
         }
 
         this.classmap = classmap;
+        this.vertexProps = vertexProps;
+        this.edgeProps = edgeProps;
         this.section = section;
         vertexCache = new LRUMap();
     }
@@ -48,7 +53,8 @@ public class GraphSectionImpl implements GraphSection {
             targetNames.forEach(targetName -> injectEdges(g, srcVertex, edgeName, targetName));
         } else {
             Vertex targetVertex = findOrCreateVertex(g, (String) target);
-            srcVertex.addEdge(classmap.resolveEdge(edgeName), targetVertex);
+            Edge edge = srcVertex.addEdge(classmap.resolveEdge(edgeName), targetVertex);
+            edgeProps.updateEdgeProperties(edgeName, edge);
         }
     }
 
@@ -62,6 +68,7 @@ public class GraphSectionImpl implements GraphSection {
             }
         }
 
+        vertexProps.updateVertexProperties(vertexName, vertex);
         vertexCache.put(resolvedVertexName, vertex);
         return vertex;
     }

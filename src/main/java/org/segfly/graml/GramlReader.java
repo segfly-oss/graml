@@ -1,5 +1,11 @@
 package org.segfly.graml;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Map;
 
 import org.segfly.graml.model.ClassmapSection;
@@ -11,6 +17,7 @@ import org.segfly.graml.model.VerticesSection;
 import org.segfly.graml.model.impl.GramlFactoryImpl;
 import org.yaml.snakeyaml.Yaml;
 
+import com.google.common.io.ByteStreams;
 import com.tinkerpop.blueprints.Graph;
 
 /**
@@ -32,6 +39,26 @@ public class GramlReader {
         this.target = target;
         this.ymlProc = ymlProc;
         this.graml = graml;
+    }
+
+    public void load(final URL url) throws IOException, GramlException {
+        InputStream stream = url.openStream();
+        try {
+            load(stream);
+        } finally {
+            stream.close();
+        }
+    }
+
+    public void load(final File file) throws IOException, GramlException {
+        load(new FileInputStream(file));
+    }
+
+    public void load(final InputStream in) throws IOException, GramlException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteStreams.copy(in, baos);
+        baos.close();
+        load(baos.toString());
     }
 
     public void load(final String yaml) throws GramlException {

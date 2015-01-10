@@ -1,0 +1,21 @@
+graml: {version: 1.0}
+
+classmap:
+  defaults:
+     vertex: V
+     edge: E
+  machine: [car]
+  structure: [road, garaged]
+  geospatial: location
+
+graph:
+  car: {driveOn: road, location: sydney, garaged: home}
+  truck: {driveOn: [road, dirt]}
+
+vertices:
+  truck: {tires: goodyear}
+  sydney: {tires: goodyear, lat: -33.7969235, lon: 150.9224326}
+  road: {lanes: [north, south]}
+
+edges:
+  location: {coordStyle: cartesian}

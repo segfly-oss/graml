@@ -41,14 +41,31 @@ class GramlReaderSpec extends Specification {
         graphson.contains("""{"_id":"0","_type":"edge","_outV":"source","_inV":"target","_label":"edge"}""")
     }
 
-    def readComplexGraph() {
+    def readFromFile() {
         setup:
         def graml = new GramlReader(g)
+        File yamlfile = new File(this.getClass().getResource('/org/segfly/graml/complexGraph.yaml').path)
 
         when:
-        def graphson = loadGramlGraph(g, graml, complexYaml)
+        def graphson = loadGramlGraph(g, graml, yamlfile)
 
         then:
+        verifyGraphContents(graphson)
+    }
+
+    def readFromURL() {
+        setup:
+        def graml = new GramlReader(g)
+        URL yamlfile = this.getClass().getResource('/org/segfly/graml/complexGraph.yaml')
+
+        when:
+        def graphson = loadGramlGraph(g, graml, yamlfile)
+
+        then:
+        verifyGraphContents(graphson)
+    }
+
+    private def verifyGraphContents(String graphson) {
         graphson.contains("""{"_id":"V:home","_type":"vertex"}""")
         graphson.contains("""{"_id":"machine:car","_type":"vertex"}""")
         graphson.contains("""{"tires":"goodyear","_id":"V:truck","_type":"vertex"}""")
@@ -68,24 +85,4 @@ class GramlReaderSpec extends Specification {
         GraphSONWriter.outputGraph(g, baos)
         return baos.toString()
     }
-
-    def complexYaml = """
-            graml: {version: 1.0}
-            classmap:
-              defaults:
-                 vertex: V
-                 edge: E
-              machine: [car]
-              structure: [road, garaged]
-              geospatial: location
-            graph:
-              car: {driveOn: road, location: sydney, garaged: home}
-              truck: {driveOn: [road, dirt]}
-            vertices:
-              truck: {tires: goodyear}
-              sydney: {tires: goodyear, lat: -33.7969235, lon: 150.9224326}
-              road: {lanes: [north, south]}
-            edges:
-              location: {coordStyle: cartesian}
-    """
 }

@@ -4,6 +4,7 @@ import org.yaml.snakeyaml.Yaml
 
 import spock.lang.*
 
+import com.tinkerpop.blueprints.impls.orient.OrientBaseGraph
 import com.tinkerpop.blueprints.impls.orient.OrientGraphNoTx
 import com.tinkerpop.blueprints.util.io.graphson.GraphSONWriter
 
@@ -20,39 +21,44 @@ class GramlReaderOrientDBITest extends Specification {
     def readFromFile() {
         given:
         def graml = new GramlReader(g)
-        File yamlfile = new File(getClass().getResource('/yaml/complexGraph.yaml').path)
+        File yamlfile = new File(getClass().getResource('/yaml/orientTestGraph.yaml').path)
 
         when:
         def graphson = loadGramlGraph(g, graml, yamlfile)
 
         then:
-        verifyGraph(graphson)
+        verifyGraph(g, graphson)
     }
 
     def readFromURL() {
         given:
         def graml = new GramlReader(g)
-        URL yamlfile = this.getClass().getResource('/yaml/complexGraph.yaml')
+        URL yamlfile = this.getClass().getResource('/yaml/orientTestGraph.yaml')
 
         when:
         def graphson = loadGramlGraph(g, graml, yamlfile)
 
         then:
-        verifyGraph(graphson)
+        verifyGraph(g, graphson)
     }
 
-    private def verifyGraph(String graph) {
-        assert graph.contains("""{"name":"car","_id":"#11:0","_type":"vertex"}""")
-        assert graph.contains("""{"name":"road","lanes":["north","south"],"_id":"#12:0","_type":"vertex"}""")
-        assert graph.contains("""{"name":"sydney","lon":150.9224326,"lat":-33.7969235,"_id":"#9:0","_type":"vertex"}""")
-        assert graph.contains("""{"name":"home","_id":"#9:1","_type":"vertex"}""")
-        assert graph.contains("""{"name":"truck","tires":"goodyear","_id":"#9:2","_type":"vertex"}""")
-        assert graph.contains("""{"name":"dirt","_id":"#9:3","_type":"vertex"}""")
+    private def verifyGraph(OrientBaseGraph g, String graphson) {
+        assert g.getVerticesOfClass("machine").count({ true }) == 1
+        assert g.getVerticesOfClass("structure").count({ true }) == 2
+        assert g.getVerticesOfClass("geospatial").count({ true }) == 1
+
+        assert graphson.find(/\Q{"name":"truck","tires":"goodyear","_id":"\E.*\Q","_type":"vertex"}\E/)
+        assert graphson.find(/\Q{"name":"dirt","_id":"\E.*\Q","_type":"vertex"}\E/)
+        assert graphson.find(/\Q{"name":"car","_id":"\E.*\Q","_type":"vertex"}\E/)
+        assert graphson.find(/\Q{"name":"road","lanes":["north","south"],"_id":"\E.*\Q","_type":"vertex"}\E/)
+        assert graphson.find(/\Q{"name":"home","_id":"\E.*\Q","_type":"vertex"}\E/)
+        assert graphson.find(/\Q{"name":"sydney","lon":150.9224326,"lat":-33.7969235,"_id":"\E.*\Q","_type":"vertex"}\E/)
 
         // They only heavyweight edge due to the addition of properties on this edge
-        assert graph.contains("""{"coordStyle":"cartesian","_id":"#13:0","_type":"edge","_outV":"#11:0","_inV":"#9:0","_label":"location"}""")
+        assert graphson.find(/\Q{"coordStyle":"cartesian","_id":"\E.*\Q","_type":"edge","_outV":"\E.*\Q","_inV":"\E.*\Q","_label":"location"}\E/)
         true
     }
+
 
     private def loadGramlGraph(g, graml, yaml) {
         graml.load(yaml)

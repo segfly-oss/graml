@@ -3,10 +3,9 @@ graml: {version: 1.0}
 classmap:
   defaults:
      vertex: V
-     edge: E
   machine: [car]
-  structure: [road, garaged]
-  geospatial: location
+  structure: [road, home]
+  geospatial: sydney
 
 graph:
   car: {driveOn: road, location: sydney, garaged: home}

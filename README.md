@@ -75,8 +75,6 @@ graph     | Yes      | Graph relationships
 vertices  | No       | Vertex properties
 edges     | No       | Edge properties
 
-View the detailed [Graml Specification](GramlSpec.md).
-
 ### Header
 The _required_ header must be present:
 ```yaml
@@ -146,8 +144,7 @@ edges:
 Graml currently has the following limitations:
 
 #### 1. Vertices must be unique
-Graml does not support multiple vertices with the same name in accordance with the Yaml specifcation.
-(sections 3.1.1 and 3.2.1)
+Graml does not support multiple vertices with the same name in accordance with the Yaml specification.
 
 ```yaml
 graph:
@@ -193,6 +190,7 @@ This may be addressed in the future with edge IDs.
 Graml's design prioritizes ease-of-use over speed and scale.
 If you have huge graphs, Graml may not be for you.
 At least not yet.
+
 A future version may incorporate some degree of stream-processing to better handle huge graphs.
 The current implementation expects to process the entire graml file at once which places memory limits on the size of graph. 
 

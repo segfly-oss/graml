@@ -66,7 +66,7 @@ public class ClassmapSectionImpl implements ClassmapSection {
         // If there was no classname and no default, just return the name as-is
         String className = classmap.getOrDefault(edgeName, defaultEdgeClass);
         if (className != null) {
-            return format("%s:%s", className, edgeName);
+            return format("class:%s", className);
         } else {
             return edgeName;
         }
@@ -77,7 +77,7 @@ public class ClassmapSectionImpl implements ClassmapSection {
         // If there was no classname and no default, just return the name as-is
         String className = classmap.getOrDefault(vertexName, defaultVertexClass);
         if (className != null) {
-            return format("%s:%s", className, vertexName);
+            return format("class:%s", className);
         } else {
             return vertexName;
         }

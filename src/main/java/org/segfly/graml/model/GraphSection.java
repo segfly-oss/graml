@@ -8,7 +8,8 @@ import com.tinkerpop.blueprints.Graph;
  */
 public interface GraphSection {
 
-    public static String GRAPH_SECTION = "graph";
+    public static String GRAPH_SECTION         = "graph";
+    public static String ELEMENT_NAME_PROPERTY = "name";
 
     void inject(Graph target);
 }

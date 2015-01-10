@@ -63,23 +63,34 @@ public class GraphSectionImpl implements GraphSection {
                     srcVertexName));
         } else {
             Vertex targetVertex = findOrCreateVertex(g, (String) target);
-            Edge edge = srcVertex.addEdge(classmap.resolveEdge(edgeName), targetVertex);
+            // TODO: Enable custom edge classes
+
+            Edge edge = srcVertex.addEdge(edgeName, targetVertex);
             edgeProps.updateEdgeProperties(edgeName, edge);
         }
     }
 
     private Vertex findOrCreateVertex(final Graph g, final String vertexName) {
         String resolvedVertexName = classmap.resolveVertex(vertexName);
-        Vertex vertex = (Vertex) vertexCache.get(resolvedVertexName);
+        boolean usingClasses = !vertexName.equals(resolvedVertexName);
+
+        Vertex vertex = (Vertex) vertexCache.get(vertexName);
         if (vertex == null) {
-            vertex = g.getVertex(resolvedVertexName);
+            // FIXME Properly query for vertices in DB if getByID misses
+            if (!usingClasses) {
+                vertex = g.getVertex(resolvedVertexName);
+            }
+
             if (vertex == null) {
                 vertex = g.addVertex(resolvedVertexName);
+                if (usingClasses) {
+                    vertex.setProperty(ELEMENT_NAME_PROPERTY, vertexName);
+                }
             }
         }
 
         vertexProps.updateVertexProperties(vertexName, vertex);
-        vertexCache.put(resolvedVertexName, vertex);
+        vertexCache.put(vertexName, vertex);
         return vertex;
     }
 

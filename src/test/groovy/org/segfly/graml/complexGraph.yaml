@@ -14,7 +14,7 @@ graph:
 
 vertices:
   truck: {tires: goodyear}
-  sydney: {tires: goodyear, lat: -33.7969235, lon: 150.9224326}
+  sydney: {lat: -33.7969235, lon: 150.9224326}
   road: {lanes: [north, south]}
 
 edges:

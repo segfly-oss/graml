@@ -1,7 +1,7 @@
 package org.segfly.graml.model.imp
 
 import org.segfly.graml.GramlException
-import org.segfly.graml.model.impl.ClassmapSectionImpl;
+import org.segfly.graml.model.impl.ClassmapSectionImpl
 
 import spock.lang.*
 
@@ -35,11 +35,11 @@ class ClassmapSectionImplSpec extends Specification {
 
         where:
         entity || fqn
-        'v0'   || 'c1:v0'
-        'v1'   || 'c1:v1'
-        'e2'   || 'c1:e2'
-        'v3'   || 'c2:v3'
-        'e4'   || 'c2:e4'
+        'v0'   || 'class:c1'
+        'v1'   || 'class:c1'
+        'e2'   || 'class:c1'
+        'v3'   || 'class:c2'
+        'e4'   || 'class:c2'
     }
 
     def allowsSingleMappings() {
@@ -79,8 +79,8 @@ class ClassmapSectionImplSpec extends Specification {
 
         where:
         entity || fqn
-        'v0'   || 'V:v0'
-        'v1'   || 'foo:v1'
+        'v0'   || 'class:V'
+        'v1'   || 'class:foo'
     }
 
     def defaultEdgeClass() {
@@ -93,8 +93,8 @@ class ClassmapSectionImplSpec extends Specification {
 
         where:
         entity || fqn
-        'e0'   || 'E:e0'
-        'e1'   || 'foo:e1'
+        'e0'   || 'class:E'
+        'e1'   || 'class:foo'
     }
 
     def rogueObject() {

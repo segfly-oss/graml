@@ -6,11 +6,13 @@ import org.segfly.graml.GramlException;
 import org.segfly.graml.model.ClassmapSection;
 import org.segfly.graml.model.EdgesSection;
 import org.segfly.graml.model.GramlFactory;
+import org.segfly.graml.model.GramlHeaderSection;
 import org.segfly.graml.model.GraphSection;
 import org.segfly.graml.model.VerticesSection;
 
 import static org.segfly.graml.model.ClassmapSection.CLASSMAP_SECTION;
 import static org.segfly.graml.model.EdgesSection.EDGES_SECTION;
+import static org.segfly.graml.model.GramlHeaderSection.GRAML_HEADER_SECTION;
 import static org.segfly.graml.model.GraphSection.GRAPH_SECTION;
 import static org.segfly.graml.model.VerticesSection.VERTICES_SECTION;
 
@@ -19,6 +21,13 @@ import static org.segfly.graml.model.VerticesSection.VERTICES_SECTION;
  * @since Jan 4, 2015
  */
 public class GramlFactoryImpl implements GramlFactory {
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public GramlHeaderSection getGramlHeaderSection(@SuppressWarnings("rawtypes") final Map fullMap)
+            throws GramlException {
+        return new GramlHeaderSectionImpl((Map<String, Object>) fullMap.get(GRAML_HEADER_SECTION));
+    }
 
     @SuppressWarnings("unchecked")
     @Override

@@ -1,4 +1,4 @@
-package org.segfly.graml.model.imp
+package org.segfly.graml.model.impl
 
 import org.segfly.graml.model.impl.EdgesSectionImpl;
 

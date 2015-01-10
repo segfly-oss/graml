@@ -20,7 +20,7 @@ class GramlReaderOrientDBITest extends Specification {
     def readFromFile() {
         given:
         def graml = new GramlReader(g)
-        File yamlfile = new File(getClass().getResource('/org/segfly/graml/complexGraph.yaml').path)
+        File yamlfile = new File(getClass().getResource('/yaml/complexGraph.yaml').path)
 
         when:
         def graphson = loadGramlGraph(g, graml, yamlfile)
@@ -32,7 +32,7 @@ class GramlReaderOrientDBITest extends Specification {
     def readFromURL() {
         given:
         def graml = new GramlReader(g)
-        URL yamlfile = this.getClass().getResource('/org/segfly/graml/complexGraph.yaml')
+        URL yamlfile = this.getClass().getResource('/yaml/complexGraph.yaml')
 
         when:
         def graphson = loadGramlGraph(g, graml, yamlfile)

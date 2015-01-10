@@ -44,7 +44,7 @@ class GramlReaderSpec extends Specification {
     def readFromFile() {
         setup:
         def graml = new GramlReader(g)
-        File yamlfile = new File(this.getClass().getResource('/org/segfly/graml/complexGraph.yaml').path)
+        File yamlfile = new File(getClass().getResource('/org/segfly/graml/complexGraph.yaml').path)
 
         when:
         def graphson = loadGramlGraph(g, graml, yamlfile)

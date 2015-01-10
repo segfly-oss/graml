@@ -19,14 +19,12 @@ public class ClassmapSectionImpl implements ClassmapSection {
     private String              defaultEdgeClass;
 
     // TODO figure out why Map<String, ?> results in internal groovy compiler error
-    public ClassmapSectionImpl(final Map<String, Object> section) throws GramlException {
+    public ClassmapSectionImpl(final Map<String, Object> section) {
         classmap = new HashMap<String, String>();
 
         // Pivot the map entries if the classmap section is present
         if (section != null) {
-            for (String key : section.keySet()) {
-                pivot(classmap, key, section.get(key));
-            }
+            section.forEach((k, v) -> pivot(classmap, k, v));
         }
     }
 
@@ -40,10 +38,9 @@ public class ClassmapSectionImpl implements ClassmapSection {
      *            the incoming key
      * @param value
      *            a {@link List} of strings or an individual string
-     * @throws GramlException
      */
     @SuppressWarnings("unchecked")
-    private void pivot(final Map<String, String> target, final String key, final Object value) throws GramlException {
+    private void pivot(final Map<String, String> target, final String key, final Object value) {
         // Capture the defaults subsection
         if (CLASSMAP_DEFAULT_SUBSECTION.equals(key)) {
             Map<String, String> defaults = (Map<String, String>) value;

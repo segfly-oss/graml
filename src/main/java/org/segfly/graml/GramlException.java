@@ -7,7 +7,7 @@ package org.segfly.graml;
  * @since Jan 3, 2015
  */
 @SuppressWarnings("serial")
-public class GramlException extends Exception {
+public class GramlException extends RuntimeException {
 
     public GramlException(final String msg, final Throwable cause) {
         super(msg, cause);

@@ -1,10 +1,10 @@
 package org.segfly.graml.model.imp
 
 import org.segfly.graml.GramlException
-import org.segfly.graml.model.ClassmapSection;
-import org.segfly.graml.model.EdgesSection;
-import org.segfly.graml.model.VerticesSection;
-import org.segfly.graml.model.impl.GraphSectionImpl;
+import org.segfly.graml.model.ClassmapSection
+import org.segfly.graml.model.EdgesSection
+import org.segfly.graml.model.VerticesSection
+import org.segfly.graml.model.impl.GraphSectionImpl
 
 import spock.lang.*
 
@@ -121,6 +121,18 @@ class GraphSectionImplSpec extends Specification {
         graphson.contains("""{"vertexProp":"foo","_id":"v:target","_type":"vertex"}""")
         graphson.contains("""{"vertexProp":"foo","_id":"v:source","_type":"vertex"}""")
         graphson.contains("""{"edgeProp":"bar","_id":"0","_type":"edge","_outV":"v:source","_inV":"v:target","_label":"e:edge"}""")
+    }
+
+    def arbitraryNestedMaps() {
+        setup:
+        def section = [source: [edge: [target: 'end']]]
+        def graphSection = new GraphSectionImpl(section, stubClassmap, stubVerticesProps, stubEdgesProps)
+
+        when:
+        def graphson = injectGraph(graphSection, g)
+
+        then:
+        thrown(GramlException)
     }
 
     def missingGraphSectionThrowsException() {

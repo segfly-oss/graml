@@ -1,9 +1,10 @@
-package org.segfly.graml.model;
+package org.segfly.graml.model.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.segfly.graml.GramlException;
+import org.segfly.graml.model.VerticesSection;
 
 import com.tinkerpop.blueprints.Vertex;
 

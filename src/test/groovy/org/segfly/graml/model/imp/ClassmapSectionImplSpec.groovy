@@ -1,6 +1,7 @@
-package org.segfly.graml.model
+package org.segfly.graml.model.imp
 
 import org.segfly.graml.GramlException
+import org.segfly.graml.model.impl.ClassmapSectionImpl;
 
 import spock.lang.*
 

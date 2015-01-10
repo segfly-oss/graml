@@ -1,10 +1,14 @@
-package org.segfly.graml.model;
+package org.segfly.graml.model.impl;
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.map.LRUMap;
 import org.segfly.graml.GramlException;
+import org.segfly.graml.model.ClassmapSection;
+import org.segfly.graml.model.EdgesSection;
+import org.segfly.graml.model.GraphSection;
+import org.segfly.graml.model.VerticesSection;
 
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Graph;

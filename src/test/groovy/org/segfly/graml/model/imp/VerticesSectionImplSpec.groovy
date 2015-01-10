@@ -1,4 +1,6 @@
-package org.segfly.graml.model
+package org.segfly.graml.model.imp
+
+import org.segfly.graml.model.impl.VerticesSectionImpl;
 
 import spock.lang.*
 

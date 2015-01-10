@@ -5,9 +5,9 @@ import java.util.Map;
 import org.segfly.graml.model.ClassmapSection;
 import org.segfly.graml.model.EdgesSection;
 import org.segfly.graml.model.GramlFactory;
-import org.segfly.graml.model.GramlFactoryImpl;
 import org.segfly.graml.model.GraphSection;
 import org.segfly.graml.model.VerticesSection;
+import org.segfly.graml.model.impl.GramlFactoryImpl;
 import org.yaml.snakeyaml.Yaml;
 
 import com.tinkerpop.blueprints.Graph;

@@ -1,6 +1,10 @@
-package org.segfly.graml.model
+package org.segfly.graml.model.imp
 
 import org.segfly.graml.GramlException
+import org.segfly.graml.model.ClassmapSection;
+import org.segfly.graml.model.EdgesSection;
+import org.segfly.graml.model.VerticesSection;
+import org.segfly.graml.model.impl.GraphSectionImpl;
 
 import spock.lang.*
 

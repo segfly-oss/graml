@@ -1,8 +1,13 @@
-package org.segfly.graml.model;
+package org.segfly.graml.model.impl;
 
 import java.util.Map;
 
 import org.segfly.graml.GramlException;
+import org.segfly.graml.model.ClassmapSection;
+import org.segfly.graml.model.EdgesSection;
+import org.segfly.graml.model.GramlFactory;
+import org.segfly.graml.model.GraphSection;
+import org.segfly.graml.model.VerticesSection;
 
 import static org.segfly.graml.model.ClassmapSection.CLASSMAP_SECTION;
 import static org.segfly.graml.model.EdgesSection.EDGES_SECTION;

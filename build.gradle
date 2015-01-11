@@ -1,18 +1,46 @@
-apply plugin: 'java'
-apply plugin: 'groovy'
+plugins { id "com.github.ben-manes.versions" version "0.7" }
 
-repositories {
-    jcenter()
-}
+apply plugin: "project-report"
+apply plugin: "java"
+apply plugin: "groovy"
+apply from: "gradle/config.gradle"
+apply from: "gradle/git.gradle"
+apply from: "gradle/maven.gradle"
+
+repositories { jcenter() }
 
 dependencies {
-    compile 'com.tinkerpop.blueprints:blueprints-core:2.6.0'
-    compile 'org.yaml:snakeyaml:1.14'
-    compile 'com.google.guava:guava:18.0'
-    
-    testCompile 'org.codehaus.groovy:groovy-all:2.4.0-rc-1'
-    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    testCompile 'com.tinkerpop.blueprints:blueprints-orient-graph:2.4.0'
+    compile "com.tinkerpop.blueprints:blueprints-core:2.4.0" // Downgrading to blueprints-orient-graph version
+    compile "org.yaml:snakeyaml:1.14"
+    compile "com.google.guava:guava:18.0"
 
-    testRuntime 'cglib:cglib-nodep:3.1'
+    testCompile "org.codehaus.groovy:groovy-all:2.4.0-rc-1"
+    testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+    testCompile "com.tinkerpop.blueprints:blueprints-orient-graph:2.4.0"
+
+    testRuntime "cglib:cglib-nodep:3.1"
 }
+
+task wrapper(type: Wrapper) { gradleVersion = '2.2.1' }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+/* Useful tasks available from plugins:
+ project-report: htmlDependencyReport (build\reports\project\dependencies\index.html)
+ versions:       dependencyUpdates (build\reports\project\dependencies\index.html)
+ maven-publish:  generatePomFileForMavenJavaPublication (build\publications\mavenJava\pom-default.xml)
+ maven-publish:  publishMavenJavaPublicationToMavenLocal
+ */

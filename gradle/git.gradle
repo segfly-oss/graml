@@ -1,0 +1,34 @@
+buildscript {
+    repositories { jcenter() }
+    dependencies { classpath 'org.ajoberstar:grgit:0.4.0' }
+}
+
+import org.ajoberstar.grgit.Grgit
+
+// Get the commit history from the current HEAD and find all the commitors and authors
+// Authors are mapped to contributors and comitters are mapped to developers
+// Developers are removed from the contributors list
+def grgit = Grgit.open(project.file('.'))
+def history = grgit.log()
+def developers = history.collect{it.committer}.unique()
+def contributors = history.collect{it.author}.unique().minus(developers)
+
+// Add developers to the project.developers closure
+developers.forEach{ dev ->
+    project.developers >>= {
+        developer {
+            name dev.name
+            email dev.email
+        }
+    }
+}
+
+// Add contributors to the project.contributors closure
+contributors.forEach{ dev ->
+    project.contributors >>= {
+        contributor {
+            name dev.name
+            email dev.email
+        }
+    }
+}

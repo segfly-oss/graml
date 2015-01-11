@@ -1,0 +1,28 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def p = project
+                def compileDeps = project.configurations.compile.allDependencies
+
+                // gradle uses runtime scope by default in pom, change it to compile scope
+                asNode().dependencies.'*'.findAll() {
+                    it.scope.text() == 'runtime' && compileDeps.find { dep ->
+                        dep.name == it.artifactId.text()
+                    }
+                }.each() {
+                    it.scope*.value = 'compile'
+                }
+                
+                // Add additional information to pom
+                asNode().children().last() + p.pomExt
+            }
+        }
+    }
+}

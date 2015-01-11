@@ -1,0 +1,29 @@
+project.ext {
+    developers = {}
+    contributors = {}
+    pomExt = {
+        delegate.name project.name
+        delegate.description project.description
+        url "http://graml.segfly.com"
+        scm {
+            connection "scm:git:${x->x<<scmUrl}"
+            developerConnection "scm:git:${x->x<<scmUrl}"
+            tag project.version.replaceAll('-SNAPSHOT', '')
+            url scmUrl="git@github.com:${project.owner}/graml.git"
+        }
+        licenses {
+            license {
+                name "The Apache License, Version 2.0"
+                url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        issueManagement {
+            url "https://github.com/${project.owner}/${project.name}/issues"
+        }
+        ciManagement {
+            url "https://travis-ci.org/${project.owner}/${project.name}"
+        }
+        delegate.developers developers
+        delegate.contributors contributors
+    }
+}

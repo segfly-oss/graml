@@ -1,29 +1,31 @@
 project.ext {
-    developers = {}
-    contributors = {}
+    website = "http://${project.name}.${project.owner}.com"
+    httpscm = "https://github.com/${project.owner}/${project.name}"
+    tracker = "${project.httpscm}/issues"
+    license = "Apache-2.0"
+    releaseVersion = project.version.replaceAll('-SNAPSHOT', '')
+
     pomExt = {
         delegate.name project.name
         delegate.description project.description
-        url "http://graml.segfly.com"
+        url website
         scm {
-            connection "scm:git:${x->x<<scmUrl}"
+            connection project.httpscm
             developerConnection "scm:git:${x->x<<scmUrl}"
-            tag project.version.replaceAll('-SNAPSHOT', '')
+            tag releaseVersion
             url scmUrl="git@github.com:${project.owner}/graml.git"
         }
         licenses {
             license {
-                name "The Apache License, Version 2.0"
-                url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                name project.license
+                url "https://raw.githubusercontent.com/${project.owner}/${project.name}/master/LICENSE"
             }
         }
-        issueManagement {
-            url "https://github.com/${project.owner}/${project.name}/issues"
-        }
-        ciManagement {
-            url "https://travis-ci.org/${project.owner}/${project.name}"
-        }
+        issueManagement { url project.tracker }
+        ciManagement { url "https://travis-ci.org/${project.owner}/${project.name}" }
         delegate.developers developers
         delegate.contributors contributors
     }
+    developers = {}
+    contributors = {}
 }

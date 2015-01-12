@@ -1,0 +1,32 @@
+bintray {
+    user = project.bintrayUser // configure in ~/.gradle/gradle.properties
+    key = project.bintrayKey // configure in ~/.gradle/gradle.properties
+    publications = ['mavenJava']
+    dryRun = false
+    publish = false
+    pkg {
+        repo = 'maven'
+        // userOrg = 'myorg'
+        name = project.name        
+        desc = project.description
+        websiteUrl = project.website
+        issueTrackerUrl = project.tracker
+        vcsUrl = project.httpscm
+        licenses = [project.license]
+        labels = [
+            'orientdb',
+            'tinkerpop',
+            'blueprints',
+            'yaml'
+        ]
+        version {
+            name = releaseVersion
+            released = new Date()
+            vcsTag = releaseVersion
+            gpg {
+                sign = true
+                passphrase = project.gpgPassphrase
+            }
+        }
+    }
+}

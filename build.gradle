@@ -1,4 +1,7 @@
-plugins { id "com.github.ben-manes.versions" version "0.7" }
+plugins {
+    id "com.github.ben-manes.versions" version "0.7"
+    id "com.jfrog.bintray" version "1.0"
+}
 
 apply plugin: "project-report"
 apply plugin: "java"
@@ -6,6 +9,7 @@ apply plugin: "groovy"
 apply from: "gradle/config.gradle"
 apply from: "gradle/git.gradle"
 apply from: "gradle/maven.gradle"
+apply from: "gradle/bintray.gradle"
 
 repositories { jcenter() }
 
@@ -42,5 +46,6 @@ artifacts {
  project-report: htmlDependencyReport (build\reports\project\dependencies\index.html)
  versions:       dependencyUpdates (build\reports\project\dependencies\index.html)
  maven-publish:  generatePomFileForMavenJavaPublication (build\publications\mavenJava\pom-default.xml)
- maven-publish:  publishMavenJavaPublicationToMavenLocal
+ maven-publish:  publishToMavenLocal (SNAPSHOT)
+ bintray:        bintrayUpload 
  */

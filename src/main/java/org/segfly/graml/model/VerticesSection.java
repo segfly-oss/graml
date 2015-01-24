@@ -18,8 +18,8 @@ public interface VerticesSection {
     /**
      * Takes an vertex name and applies properties specified in Graml to the given vertex object.
      *
-     * @param edgeName
-     * @param edge
+     * @param vertexName
+     * @param vertex
      */
     void updateVertexProperties(String vertexName, Vertex vertex);
 }

@@ -10,6 +10,8 @@ import org.segfly.graml.model.ClassmapSection;
 import static java.lang.String.format;
 
 /**
+ * This is the default {@link ClassmapSection} implementation and targets OrientDB usage.
+ *
  * @author Nicholas Pace
  * @since Jan 4, 2015
  */
@@ -18,8 +20,14 @@ public class ClassmapSectionImpl implements ClassmapSection {
     private String              defaultVertexClass;
     private String              defaultEdgeClass;
 
-    // TODO figure out why Map<String, ?> results in internal groovy compiler error
+    /**
+     * Instantiate this class with a map constrained to the classmap section.
+     *
+     * @param section
+     *            A map containing only key/values from the classmap section of a YAML file.
+     */
     public ClassmapSectionImpl(final Map<String, Object> section) {
+        // TODO figure out why Map<String, ?> results in internal groovy compiler error
         classmap = new HashMap<String, String>();
 
         // Pivot the map entries if the classmap section is present
@@ -61,6 +69,11 @@ public class ClassmapSectionImpl implements ClassmapSection {
         }
     }
 
+    /**
+     * Resolves the classname for the given vertex in the format expected by OrientDB class:[classname]
+     *
+     * @see org.segfly.graml.model.ClassmapSection#resolveEdge(java.lang.String)
+     */
     @Override
     public String resolveEdge(final String edgeName) {
         // If there was no classname and no default, just return the name as-is
@@ -72,6 +85,11 @@ public class ClassmapSectionImpl implements ClassmapSection {
         }
     }
 
+    /**
+     * Resolves the classname for the given edge in the format expected by OrientDB class:[classname]
+     *
+     * @see org.segfly.graml.model.ClassmapSection#resolveVertex(java.lang.String)
+     */
     @Override
     public String resolveVertex(final String vertexName) {
         // If there was no classname and no default, just return the name as-is
@@ -83,6 +101,9 @@ public class ClassmapSectionImpl implements ClassmapSection {
         }
     }
 
+    /**
+     * @see org.segfly.graml.model.ClassmapSection#get(java.lang.String)
+     */
     @Override
     public String get(final String entity) {
         return classmap.get(entity);

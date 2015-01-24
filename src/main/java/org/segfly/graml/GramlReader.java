@@ -21,19 +21,41 @@ import org.yaml.snakeyaml.Yaml;
 import com.tinkerpop.blueprints.Graph;
 
 /**
+ * Top level api and class for Graml. Using this class you can read a Graml compliant YAML file and load the graph
+ * informatoin into a target Tinkerpop Blueprints {@link Graph} object. From there, you can commit, rollback, apply
+ * other Graml files, etc.
+ *
  * @author Nicholas Pace
  * @since Jan 3, 2015
  */
 public class GramlReader {
+    /** The target graph to load the graml data. */
     private Graph        target;
+
+    /** Internal YAML processor */
     private Yaml         ymlProc;
 
+    /** Dependency injection factory for Graml */
     private GramlFactory graml;
 
+    /**
+     * Creates a {@link GramlReader} that will load a Graml graph into the target Tinkerpop Bluprints {@link Graph}
+     * object.
+     *
+     * @param target
+     */
     public GramlReader(final Graph target) {
         this(target, new Yaml(), new GramlFactoryImpl());
     }
 
+    /**
+     * Package-private constructor for testing only. Does not use {@link GramlFactory} so that tests can easily inject
+     * mocks.
+     *
+     * @param target
+     * @param ymlProc
+     * @param graml
+     */
     GramlReader(final Graph target, final Yaml ymlProc, final GramlFactory graml) {
         super();
         this.target = target;
@@ -41,6 +63,13 @@ public class GramlReader {
         this.graml = graml;
     }
 
+    /**
+     * Loads a Graml file from a {@link URL}.
+     *
+     * @param url
+     * @throws IOException
+     * @throws GramlException
+     */
     public void load(final URL url) throws IOException, GramlException {
         InputStream stream = url.openStream();
         try {
@@ -50,10 +79,24 @@ public class GramlReader {
         }
     }
 
+    /**
+     * Loads a Graml file from a {@link File}.
+     *
+     * @param file
+     * @throws IOException
+     * @throws GramlException
+     */
     public void load(final File file) throws IOException, GramlException {
         load(new FileInputStream(file));
     }
 
+    /**
+     * Loads a Graml file from an {@link InputStream}.
+     *
+     * @param in
+     * @throws IOException
+     * @throws GramlException
+     */
     public void load(final InputStream in) throws IOException, GramlException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         copy(in, baos);
@@ -61,6 +104,12 @@ public class GramlReader {
         load(baos.toString());
     }
 
+    /**
+     * Loads Graml from a {@link String} representation.
+     *
+     * @param yaml
+     * @throws GramlException
+     */
     public void load(final String yaml) throws GramlException {
         // Read the YAML
         @SuppressWarnings("rawtypes")
@@ -78,7 +127,11 @@ public class GramlReader {
     }
 
     /**
-     * Copies all bytes from the input stream to the output stream. Does not close or flush either stream.
+     * Copies all bytes from the input stream to the output stream. Does not close or flush either stream. This is
+     * copied from Guava ByteStreams. Generally, we don't want to cut/paste code, but we are trying to make the
+     * dependency footprint of Graml very small.<br/>
+     * <br/>
+     * Special thanks to the original authors for this function.
      *
      * @param from
      *            the input stream to read from

@@ -9,10 +9,19 @@ package org.segfly.graml;
 @SuppressWarnings("serial")
 public class GramlException extends RuntimeException {
 
+    /**
+     * @see RuntimeException#RuntimeException(String, Throwable)
+     * @param msg
+     * @param cause
+     */
     public GramlException(final String msg, final Throwable cause) {
         super(msg, cause);
     }
 
+    /**
+     * @see RuntimeException#RuntimeException(String)
+     * @param msg
+     */
     public GramlException(final String msg) {
         super(msg);
     }

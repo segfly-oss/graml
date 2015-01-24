@@ -80,7 +80,11 @@ No patches sent via email or other methods.
 
 Before coding and submitting a pull request, check if there is an open issue for the feature or bug.
 If one does not exist, create one and then create your pull request [referencing the issue](https://github.com/blog/1506-closing-issues-via-pull-requests).
-Referencing issues from individual commits is discouraged.
+Referencing issues from individual commits is discouraged because it pollutes the referenced issue with notifications.
+
+For large changes, it's highly recommended to engage with the maintainers before writing code.
+We don't wan anyone's donated time to go to waste.
+There may be architectural or other large implications that may take the project in an undesired direction.
 
 ### Feature Branching
 

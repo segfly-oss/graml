@@ -16,7 +16,6 @@ repositories { jcenter() }
 dependencies {
     compile "com.tinkerpop.blueprints:blueprints-core:2.4.0" // Downgrading to blueprints-orient-graph version
     compile "org.yaml:snakeyaml:1.14"
-    compile "com.google.guava:guava:18.0"
 
     testCompile "org.codehaus.groovy:groovy-all:2.4.0-rc-1"
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"

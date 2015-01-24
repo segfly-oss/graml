@@ -83,7 +83,7 @@ graml: {version: 1.0}
 
 ### Classmap
 The _optional_ classmap section supports object-oriented databases such as OrientDB.
-When resolving a node or edge, an entity's class is determined by this section.
+When resolving a vertex or edge, an entity's class is determined by this section.
 
 ```yaml
 classmap:
@@ -126,7 +126,7 @@ graph:
 ```
 
 ### Entity Properties
-The _optional_ entity sections allow the assignemtn of properties and values to nodes and edges in the graph section.
+The _optional_ entity sections allow the assignemtn of properties and values to vertices and edges in the graph section.
 
 ```yaml
 vertices:

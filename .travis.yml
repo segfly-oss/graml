@@ -1,0 +1,21 @@
+sudo: false
+language: java
+jdk:
+  - oraclejdk8
+env:
+  - TERM=dumb
+cache:  
+  directories:  
+  - $HOME/.gradle/wrapper
+  - $HOME/.gradle/caches/2.2.1/scripts
+  - $HOME/.gradle/caches/modules-2/files-2.1
+  - $HOME/.gradle/caches/modules-2/metadata-2.14
+
+before_install:
+  - chmod +x gradlew
+
+install:
+  - ./gradlew assemble
+
+script:
+  - ./gradlew check

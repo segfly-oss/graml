@@ -1,5 +1,6 @@
 # YAML for Graphs = Graml
 [![License](http://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
+[![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
 
 ### About
 Graml is a lightweight graph mark-up language based on [YAML](http://en.wikipedia.org/wiki/YAML).

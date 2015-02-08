@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Graml : Library to represent Tinkerpop graphs as YAML">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Graml</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/segfly/graml">View on GitHub</a>
+
+          <h1 id="project_title">Graml</h1>
+          <h2 id="project_tagline">Library to represent Tinkerpop graphs as YAML</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/segfly/graml/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/segfly/graml/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="yaml-for-graphs--graml" class="anchor" href="#yaml-for-graphs--graml" aria-hidden="true"><span class="octicon octicon-link"></span></a>YAML for Graphs = Graml</h1>
+
+<p><a href="http://choosealicense.com/licenses/apache-2.0/"><img src="http://img.shields.io/badge/license-APACHE-blue.svg?style=flat" alt="License"></a>
+<a href="https://travis-ci.org/segfly/graml"><img src="https://travis-ci.org/segfly/graml.svg" alt="Build Status"></a></p>
+
+<h3>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h3>
+
+<p>Graml is a lightweight graph mark-up language based on <a href="http://en.wikipedia.org/wiki/YAML">YAML</a>.
+It is designed to represent human-readable graphs more compactly than alternatives such as JSON (GraphSON) or XML (GraphML).</p>
+
+<h4>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features:</h4>
+
+<ul>
+<li>YAML-based graph representations</li>
+<li>Java reference implementation</li>
+<li>
+<a href="http://blueprints.tinkerpop.com/">Tinkerpop Blueprints</a> support for <a href="https://github.com/orientechnologies/orientdb">OrientDB</a>
+<a href="https://github.com/neo4j/neo4j">Neo4j</a>
+<a href="https://github.com/mongodb/mongo">MongoDB</a> and more!</li>
+</ul>
+
+<h4>
+<a id="roadmap" class="anchor" href="#roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roadmap:</h4>
+
+<ul>
+<li>Customizable section names</li>
+<li>Graph serialization to Graml</li>
+<li>DB class creation</li>
+<li>Stream processing</li>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To enable Graml in your project, simply declare the dependency:</p>
+
+<p>Gradle:</p>
+
+<div class="highlight highlight-groovy"><pre>compile <span class="pl-s1"><span class="pl-pds">'</span>com.segfly:graml:1.0.0<span class="pl-pds">'</span></span></pre></div>
+
+<p>Maven:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+  &lt;<span class="pl-ent">groupId</span>&gt;com.segfly&lt;/<span class="pl-ent">groupId</span>&gt;
+  &lt;<span class="pl-ent">artifactId</span>&gt;graml&lt;/<span class="pl-ent">artifactId</span>&gt;
+  &lt;<span class="pl-ent">version</span>&gt;1.0.0&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
+<a id="quickstart" class="anchor" href="#quickstart" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quickstart</h2>
+
+<p>Graml requires a specific data structure and can not read arbitrary YAML.
+Given a Graml-compliant file, getting started is simple:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-stj">TinkerGraph</span> g <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">TinkerGraph</span>();
+<span class="pl-stj">GramlReader</span> graml <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-stj">GramlReader</span>(g);
+graml<span class="pl-k">.</span>load(<span class="pl-k">new</span> <span class="pl-stj">File</span> (<span class="pl-s1"><span class="pl-pds">"</span>/path/to/file.yaml<span class="pl-pds">"</span></span>));</pre></div>
+
+<p>Using an empty in-memory <a href="https://github.com/tinkerpop/blueprints/wiki/TinkerGraph">TinkerGraph</a> we construct a <code>GramlReader</code>.
+We then can load any number of Graml-formatted YAML representations.</p>
+
+<h3>
+<a id="example-graml" class="anchor" href="#example-graml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Graml</h3>
+
+<p>Graml has an intuitive structure and syntax.
+YAML's inline lists (via [ ] ) and associative-lists (via { } ) allow simple one to many relationships on a single line.</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">graml:</span> <span class="pl-s1">{version: 1.0}</span></span>
+
+<span class="pl-s1"><span class="pl-ent">graph:</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span> <span class="pl-s1">{growsOn: tree}</span></span>
+  <span class="pl-s1"><span class="pl-ent">tree:</span> <span class="pl-s1">{dependsOn: water, exhale: O2}</span></span>
+  <span class="pl-s1"><span class="pl-ent">water:</span> <span class="pl-s1">{precipitatesAs: [rain, snow, sleet, hail]}</span></span></pre></div>
+
+<h2>
+<a id="graml-basics" class="anchor" href="#graml-basics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graml Basics</h2>
+
+<p>Graml contains five main sections:</p>
+
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Required</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>header</td>
+<td>Yes</td>
+<td>Metadata</td>
+</tr>
+<tr>
+<td>classmap</td>
+<td>No</td>
+<td>Object-oriented DB support</td>
+</tr>
+<tr>
+<td>graph</td>
+<td>Yes</td>
+<td>Graph relationships</td>
+</tr>
+<tr>
+<td>vertices</td>
+<td>No</td>
+<td>Vertex properties</td>
+</tr>
+<tr>
+<td>edges</td>
+<td>No</td>
+<td>Edge properties</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="header" class="anchor" href="#header" aria-hidden="true"><span class="octicon octicon-link"></span></a>Header</h3>
+
+<p>The <em>required</em> header must be present:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">graml:</span> <span class="pl-s1">{version: 1.0}</span></span></pre></div>
+
+<h3>
+<a id="classmap" class="anchor" href="#classmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classmap</h3>
+
+<p>The <em>optional</em> classmap section supports object-oriented databases such as OrientDB.
+When resolving a vertex or edge, an entity's class is determined by this section.</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">classmap:</span></span>
+  <span class="pl-s1"><span class="pl-ent">fruit:</span> <span class="pl-s1">[apples, oranges, pears]</span></span>
+  <span class="pl-s1"><span class="pl-ent">plant:</span> <span class="pl-s1">tree</span></span>
+  <span class="pl-s1"><span class="pl-ent">verb:</span> <span class="pl-s1">growsOn</span></span></pre></div>
+
+<p>Another way to think of this is in terms of how it affects names of entities sent to the Blueprints API. Consider the following graph with the above classmap example:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">graph:</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span> <span class="pl-s1">{growsOn: tree}</span></span></pre></div>
+
+<p>This will result in two vertices with the names "fruit:apples" and "plant:tree" and an edge "verb:growOn".
+An underlying implementation like OrientDB will use the prefix to map the entity to a class within the database.
+The Graml reference implementation will not create the classes.
+Future versions may address this shortcoming. </p>
+
+<h3>
+<a id="graph-definition" class="anchor" href="#graph-definition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graph Definition</h3>
+
+<p>The <em>required</em> graph section captures relationships between vertices.
+The most simple expression is a nested associative array representing vertex-edge-vertex:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">graph:</span></span>
+   <span class="pl-s1"><span class="pl-ent">parent:</span> <span class="pl-s1">{edge: child}</span></span></pre></div>
+
+<p>This will create verticies named "parent" and "child" connected with an edge named "edge".
+Whether this is a bidirectional or unidirectional relationship is determine by the underlying graph database.</p>
+
+<p>A more complex example:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">graph:</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span> <span class="pl-s1">{growsOn: tree}</span></span>
+  <span class="pl-s1"><span class="pl-ent">tree:</span> <span class="pl-s1">{dependsOn: water, exhale: O2}</span></span>
+  <span class="pl-s1"><span class="pl-ent">water:</span> <span class="pl-s1">{precipitatesAs: [rain, snow, sleet, hail]}</span></span></pre></div>
+
+<h3>
+<a id="entity-properties" class="anchor" href="#entity-properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Entity Properties</h3>
+
+<p>The <em>optional</em> entity sections allow the assignemtn of properties and values to vertices and edges in the graph section.</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">vertices:</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span></span>
+    <span class="pl-s1"><span class="pl-ent">color:</span> <span class="pl-s1">red</span></span>
+    <span class="pl-s1"><span class="pl-ent">weight:</span> <span class="pl-s1">200g </span></span>
+    <span class="pl-s1"><span class="pl-ent">ripe:</span> <span class="pl-s1">yes</span></span>
+
+<span class="pl-s1"><span class="pl-ent">edges:</span></span>
+  <span class="pl-s1"><span class="pl-ent">dependsOn:</span></span>
+    <span class="pl-s1"><span class="pl-ent">required:</span> <span class="pl-s1">true</span></span></pre></div>
+
+<h2>
+<a id="limitations" class="anchor" href="#limitations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limitations</h2>
+
+<p>Graml currently has the following limitations:</p>
+
+<h4>
+<a id="1-vertices-must-be-unique" class="anchor" href="#1-vertices-must-be-unique" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Vertices must be unique</h4>
+
+<p>Graml does not support multiple vertices with the same name in accordance with the Yaml specification.</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">graph:</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span> <span class="pl-s1">{growsOn: tree}</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span> <span class="pl-s1">{influencedBy: gravity}</span></span></pre></div>
+
+<p>The above will result in an apple vertex with one edge "gravity".
+Future versions of Graml will likely detect this and throw an exception.</p>
+
+<p>If multiple instances of an apple are desired, they should be created with specific names:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">classmap:</span></span>
+  <span class="pl-s1"><span class="pl-ent">apple:</span> <span class="pl-s1">[myApple, yourApple]</span></span>
+
+<span class="pl-s1"><span class="pl-ent">graph:</span></span>
+  <span class="pl-s1"><span class="pl-ent">myApple:</span> <span class="pl-s1">{grownIn: Washington}</span></span>
+  <span class="pl-s1"><span class="pl-ent">yourApple:</span> <span class="pl-s1">{grownIn: Japan}</span></span></pre></div>
+
+<p>The example above uses an apple class to characterize the two apples as a single type.
+If your graph database implementation does not support classes, the same could be done with a "class" relationship.</p>
+
+<h4>
+<a id="2-edge-properties-are-assigned-globally" class="anchor" href="#2-edge-properties-are-assigned-globally" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Edge properties are assigned globally</h4>
+
+<p>Multiple edges with the same name may be defined throughout the graph.
+However, edge properties are assigned globally:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="pl-s1"><span class="pl-ent">edges:</span></span>
+  <span class="pl-s1"><span class="pl-ent">grownIn:</span></span>
+    <span class="pl-s1"><span class="pl-ent">date:</span> <span class="pl-s1">October</span></span></pre></div>
+
+<p>Carrying forward with the myApple/yourApple example,
+the above edge property would have been applied to the "grownIn" edge for both apples.</p>
+
+<p>This may be addressed in the future with edge IDs.</p>
+
+<h4>
+<a id="3-huge-graphs" class="anchor" href="#3-huge-graphs" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Huge Graphs</h4>
+
+<p>Graml's design prioritizes ease-of-use over speed and scale.
+If you have huge graphs, Graml may not be for you.
+At least not yet.</p>
+
+<p>A future version may incorporate some degree of stream-processing to better handle huge graphs.
+The current implementation expects to process the entire graml file at once which places memory limits on the size of graph. </p>
+
+<h2>
+<a id="getting-involved" class="anchor" href="#getting-involved" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Involved</h2>
+
+<p>Contributions welcome!
+If you want to find out how you can get involved, please read the contributing <a href="CONTRIBUTING.md">guidelines</a>.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Graml maintained by <a href="https://github.com/segfly">segfly</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-42709304-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>

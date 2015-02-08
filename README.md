@@ -25,14 +25,14 @@ To enable Graml in your project, simply declare the dependency:
 Gradle:
 
 ```groovy
-compile 'com.segfly:graml:1.0.0'
+compile 'com.segfly.graml:graml:1.0.0'
 ```
 
 Maven:
 
 ```xml
 <dependency>
-  <groupId>com.segfly</groupId>
+  <groupId>com.segfly.graml</groupId>
   <artifactId>graml</artifactId>
   <version>1.0.0</version>
 </dependency>

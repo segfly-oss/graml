@@ -2,7 +2,7 @@
 [![License](http://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
 [![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
 
-<img src="http://graml.segfly.com/images/graml-logo.png" alt="Graml Logo" width="110" align="left">
+<img src="http://graml.segfly.com/images/graml-logo.png" alt="Graml Logo" width="130" align="left">
 
 ### About
 Graml is a lightweight graph mark-up language based on [YAML](http://en.wikipedia.org/wiki/YAML).

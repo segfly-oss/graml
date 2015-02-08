@@ -1,0 +1,12 @@
+createReleaseTag.dependsOn bintrayUpload
+
+// Clear SNAPSHOT version from other tasks
+confirmReleaseVersion << {
+    publishing.publications.mavenJava.version = project.version
+    jar.version = project.version
+    javadocJar.version = project.version
+    sourcesJar.version = project.version
+    publishing.publications.mavenJava.setArtifacts([jar, sourcesJar, javadocJar])
+    bintrayUpload.versionName = project.version
+    bintrayUpload.versionVcsTag = project.version
+}

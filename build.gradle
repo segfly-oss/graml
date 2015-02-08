@@ -1,6 +1,7 @@
 plugins {
     id "com.github.ben-manes.versions" version "0.7"
     id "com.jfrog.bintray" version "1.0"
+    id "net.researchgate.release" version "2.0.0"
 }
 
 apply plugin: "project-report"
@@ -10,6 +11,7 @@ apply from: "gradle/config.gradle"
 apply from: "gradle/git.gradle"
 apply from: "gradle/maven.gradle"
 apply from: "gradle/bintray.gradle"
+apply from: "gradle/release.gradle"
 
 repositories { jcenter() }
 
@@ -41,10 +43,14 @@ artifacts {
     archives javadocJar
 }
 
+// Release configuration
+createReleaseTag.dependsOn bintrayUpload
+
 /* Useful tasks available from plugins:
  project-report: htmlDependencyReport (build\reports\project\dependencies\index.html)
  versions:       dependencyUpdates (build\reports\project\dependencies\index.html)
  maven-publish:  generatePomFileForMavenJavaPublication (build\publications\mavenJava\pom-default.xml)
  maven-publish:  publishToMavenLocal (SNAPSHOT)
- bintray:        bintrayUpload 
+ bintray:        bintrayUpload
+ gradle-release: release
  */

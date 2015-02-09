@@ -1,9 +1,10 @@
 # YAML for Graphs = Graml
 [![License](http://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
-[ ![Download](https://api.bintray.com/packages/segfly/maven/graml/images/download.svg) ](https://bintray.com/segfly/maven/graml/_latestVersion)
+[![Download](https://api.bintray.com/packages/segfly/maven/graml/images/download.svg)](https://bintray.com/segfly/maven/graml/_latestVersion)
 [![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
+[![Coverage Status](https://coveralls.io/repos/segfly/graml/badge.svg)](https://coveralls.io/r/segfly/graml)
 
-<img src="http://graml.segfly.com/images/graml-logo.png" alt="Graml Logo" width="130" align="left">
+<img src="http://graml.segfly.com/images/graml-logo.png" alt="Graml Logo" width="120" align="left">
 
 ### About
 Graml is a lightweight graph mark-up language based on [YAML](http://en.wikipedia.org/wiki/YAML).

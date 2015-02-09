@@ -19,3 +19,6 @@ install:
 
 script:
   - ./gradlew check
+  
+after_success:
+  - ./gradlew jacocoTestReport coveralls

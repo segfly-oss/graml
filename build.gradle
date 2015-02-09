@@ -2,12 +2,15 @@ plugins {
     id "com.github.ben-manes.versions" version "0.7"
     id "com.jfrog.bintray" version "1.0"
     id "net.researchgate.release" version "2.0.0"
+    id "com.github.kt3k.coveralls" version "2.2.0"
 }
 
 apply plugin: "project-report"
 apply plugin: "java"
 apply plugin: "groovy"
+apply plugin: "jacoco"
 apply from: "gradle/config.gradle"
+apply from: "gradle/quality.gradle"
 apply from: "gradle/git.gradle"
 apply from: "gradle/maven.gradle"
 apply from: "gradle/bintray.gradle"

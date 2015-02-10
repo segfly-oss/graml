@@ -3,7 +3,7 @@
 [![Download](https://api.bintray.com/packages/segfly/maven/graml/images/download.svg)](https://bintray.com/segfly/maven/graml/_latestVersion)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml)
 [![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
-[![Coverage Status](https://coveralls.io/repos/segfly/graml/badge.svg)](https://coveralls.io/r/segfly/graml)
+[![Coverage Status](https://coveralls.io/repos/segfly/graml/badge.svg?branch=master)](https://coveralls.io/r/segfly/graml?branch=master)
 
 <img src="http://graml.segfly.com/images/graml-logo.png" alt="Graml Logo" width="120" align="left">
 

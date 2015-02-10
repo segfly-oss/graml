@@ -1,6 +1,7 @@
 # YAML for Graphs = Graml
 [![License](http://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
 [![Download](https://api.bintray.com/packages/segfly/maven/graml/images/download.svg)](https://bintray.com/segfly/maven/graml/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml)
 [![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
 [![Coverage Status](https://coveralls.io/repos/segfly/graml/badge.svg)](https://coveralls.io/r/segfly/graml)
 

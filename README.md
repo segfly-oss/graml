@@ -1,5 +1,6 @@
 # YAML for Graphs = Graml
 [![License](http://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
+[![License](http://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat)](http://semver.org/spec/v2.0.0)
 [![Download](https://api.bintray.com/packages/segfly/maven/graml/images/download.svg)](https://bintray.com/segfly/maven/graml/_latestVersion)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml)
 [![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
@@ -132,7 +133,7 @@ graph:
 ```
 
 ### Entity Properties
-The _optional_ entity sections allow the assignemtn of properties and values to vertices and edges in the graph section.
+The _optional_ entity sections allow the assignment of properties and values to vertices and edges in the graph section.
 
 ```yaml
 vertices:

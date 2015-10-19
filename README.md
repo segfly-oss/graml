@@ -2,9 +2,9 @@
 [![License](http://img.shields.io/badge/license-APACHE-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
 [![License](http://img.shields.io/badge/semver-2.0.0-blue.svg?style=flat)](http://semver.org/spec/v2.0.0)
 [![Download](https://api.bintray.com/packages/segfly/maven/graml/images/download.svg)](https://bintray.com/segfly/maven/graml/_latestVersion)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml)
-[![Build Status](https://travis-ci.org/segfly/graml.svg)](https://travis-ci.org/segfly/graml)
-[![Coverage Status](https://coveralls.io/repos/segfly/graml/badge.svg?branch=master)](https://coveralls.io/r/segfly/graml?branch=master)
+[![Maven Central](https://img.shields.io/maven-central/v/com.segfly.graml/graml.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.segfly.graml/graml)
+[![Build Status](https://travis-ci.org/segfly-projects/graml.svg)](https://travis-ci.org/segfly-projects/graml)
+[![Coverage Status](https://coveralls.io/repos/segfly-projects/graml/badge.svg?branch=master&service=github)](https://coveralls.io/github/segfly-projects/graml?branch=master)
 
 <img src="http://graml.segfly.com/images/graml-logo.png" alt="Graml Logo" width="120" align="left">
 

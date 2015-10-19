@@ -1,6 +1,6 @@
 project.ext {
     website = "http://${project.name}.${project.owner}.com"
-    httpscm = "https://github.com/${project.owner}/${project.name}"
+    httpscm = "https://github.com/${project.repoacct}/${project.name}"
     tracker = "${project.httpscm}/issues"
     license = "Apache-2.0"
     releaseVersion = project.version.replaceAll('-SNAPSHOT', '')
@@ -13,16 +13,16 @@ project.ext {
             connection project.httpscm
             developerConnection "scm:git:${x->x<<scmUrl}"
             tag releaseVersion
-            url scmUrl="git@github.com:${project.owner}/graml.git"
+            url scmUrl="git@github.com:${project.repoacct}/graml.git"
         }
         licenses {
             license {
                 name project.license
-                url "https://raw.githubusercontent.com/${project.owner}/${project.name}/master/LICENSE"
+                url "https://raw.githubusercontent.com/${project.repoacct}/${project.name}/master/LICENSE"
             }
         }
         issueManagement { url project.tracker }
-        ciManagement { url "https://travis-ci.org/${project.owner}/${project.name}" }
+        ciManagement { url "https://travis-ci.org/${project.repoacct}/${project.name}" }
         delegate.developers developers
         delegate.contributors contributors
     }
